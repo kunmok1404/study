@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+</head>
+<body>
+	<!-- 
+		get 전송방식은 요청 헤더(주소)에 데이터를 첨부	(간편, 길이제한, 노출)
+		post 전송방식은 요청 바디에 데이터를 첨부		(form, 길이무제한, 노출)
+	-->
+	<form action="/study/login.do" method="post">
+		<input type="text" name="id" placeholder="ID" 
+			required pattern="[a-z0-9]{8,20}">
+		<br><br>
+		<input type="password" name="pw" placeholder="Password"
+			required><br><br>
+		<input type="submit" value="로그인">
+	</form>
+</body>
+</html>
+
+
+
+

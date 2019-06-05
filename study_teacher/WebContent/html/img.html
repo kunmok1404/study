@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 이미지를 외부 주소로 설정하면 의존성이 높아진다 -->
+	<img alt="시각장애인용 도움말" src="https://file.namu.moe/file/8bc9e381797334eb33da66e3ba501be1c4c4824774a2cdeb21456d1037e0e6779dde22a9963f948af2a0450aa49dbbf4b748a8b1b77cef1492681c3d58728cfa7e4a24399e47ba46fb6e4150926bf3e6">
+	<!-- 같은 이미지를 폭 : 200px , 높이 : 250px로 재출력 -->
+	<img width="200" height="250" alt="시각장애인용 도움말" src="https://file.namu.moe/file/8bc9e381797334eb33da66e3ba501be1c4c4824774a2cdeb21456d1037e0e6779dde22a9963f948af2a0450aa49dbbf4b748a8b1b77cef1492681c3d58728cfa7e4a24399e47ba46fb6e4150926bf3e6">
+	
+	<br><br>
+	
+	<!-- Q : 프로젝트에 저장한 이미지를 화면에 300x300 크기로 출력 -->
+	
+	<!-- 절대 경로(absolute path) : 절대로 변하지 않는 경로 -->
+	<img width="300" height="300" src="http://localhost:8080/study/image/logo.png">
+	<br>	
+	<img width="300" height="300" src="//localhost:8080/study/image/logo.png">
+	<br>
+	<img width="300" height="300" src="/study/image/logo.png">
+	<br>
+	
+	<!-- 상대경로(relative path) : 현재 위치를 기준으로 계산한 경로 -->
+	<img width="300" height="300" src="../image/logo.png">
+</body>
+</html>
+
+
+
+
+
+
+
