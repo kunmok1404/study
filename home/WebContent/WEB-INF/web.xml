@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	XML(eXtensible Markup Language)
+	- 데이터 저장에 특화된 태그 형식의 문서
+	- 태그 형식을 사용, 태그 이름은 약속만 되어 있다면 자유
+	- 반드시 첫쨰줄에는 XML헤더가 나와야 합니다(매우 중요)
+	- JSP에서는 프로젝트의 /WEB_INF안에 web.xml을 만들어서 개별 설정
+	- 프로젝트의 /META-INF안에 context.xml을 만들어서 자원 설정
+	- 자동완성을 하고 싶다면 namespace 설정(서버 설정 참고)
+ -->
+ 
+ <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+ 	
+ 	<!-- 세션 설정 -->
+ 	<session-config>
+ 		<session-timeout>720</session-timeout>
+ 	</session-config>
+ 	
+ 	<!-- 에러 페이지 설정 -->
+ 	<error-page>
+ 		<error-code>403</error-code>
+ 		<location>/error/403.jsp</location>
+ 	</error-page>
+ 	
+ 	<error-page>
+ 		<error-code>404</error-code>
+ 		<location>/error/404.jsp</location>
+ 	</error-page>
+ 	
+ 	<error-page>
+ 		<error-code>405</error-code>
+ 		<location>/error/405.jsp</location>
+ 	</error-page>
+ 	
+ 	<error-page>
+ 		<error-code>500</error-code>
+ 		<location>/error/500.jsp</location>
+ 	</error-page>
+ </web-app>

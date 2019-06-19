@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- action을 주지 않으면 같은 페이지로 전송 -->
+	<!--  method를 주지 않으면 get방식으로 설정됨 -->
+	<form>
+		<input type="text" name = "a" placeholder="일반입력창"><br><br><!-- 일반입력창 -->
+		<input type="email" name = "b" placeholder="이메일입력창"><br><br><!-- 이메일 입력창 -->
+		<input type="password" name = "c" placeholder="비밀번호 입력창"><br><br><!-- 비밀번호 입력창 -->
+		<input type="search" name = "d" placeholder="검색창"><br><br><!-- 검색입력창 -->
+		<input type="number" name = "e" min="1" max="10" placeholder="숫자입력창"><br><br><!-- 숫자입력창 -->
+		<input type="date" name = "f" placeholder="날짜창" value="2019-10-02"><br><br><!-- 날짜입력창 -->
+		<input type="file" name = "g" placeholder="파일"><br><br><!-- 파일입력창 -->
+		<input type="button" value="테스트 버튼"><br><br><!-- 버튼입력창 -->
+		<input type="checkbox" name ="h" value="hello">수업을 열심히 듣겠습니다<br><br><!-- 체크박스 체크가 되있을때만 name=value형식으로 전송 -->
+		<input type="radio" name ="gender" value="male" >남자<!-- 라디오버튼 : 여러개 보기중에 1개를 선택하도록 하는 입력창 -->
+		<input type="radio" name = "gender" value="female">여자<br><br><!-- 하나의 그룹인식을 위해 이름을 맞춰야 함 -->
+		
+		<!-- input 외의 입력창 : select, textarea -->
+		<textarea rows="10" cols="80" name = "i" placeholder="테스트"></textarea><br><br><!-- textarea : 여러줄 입력창, value속성이 없음 -->
+		<!-- select : 드롭다운 리스트 -->
+		<select name ="j">
+			<option value = "strawberry">딸기</option>
+			<option value="banana">바나나</option>
+			<option value="pineapple">파인애플</option>
+		</select><br><br>
+		<input type="submit">
+	</form>
+
+</body>
+</html>
