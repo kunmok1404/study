@@ -6,6 +6,11 @@
     <h2>글쓰기</h2>
     <div align="center">
     <form action="write.do" method="post">
+    
+    <%-- 답글일 경우 parent값을 전달 --%>
+    <% if(request.getParameter("parent") != null) { %>
+    		<input type="hidden" name="parent" value="<%=request.getParameter("parent")%>">
+    <% } %>
     	<table>
     		<tbody>
     			<tr>

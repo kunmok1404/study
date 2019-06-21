@@ -1,5 +1,7 @@
 package beans;
 
+import java.sql.ResultSet;
+
 public class BoardDto {
 	private int no;
 	private String head;
@@ -7,6 +9,48 @@ public class BoardDto {
 	private String writer;
 	private String content;
 	private String when;
+	
+	private int parent;
+	private int depth;
+	private int team;
+	
+	public int getTeam() {
+		return team;
+	}
+
+	public void setTeam(int team) {
+		this.team = team;
+	}
+
+	public int getParent() {
+		return parent;
+	}
+
+	public void setData(ResultSet rs)throws Exception {
+		this.setNo(rs.getInt("no"));
+		this.setHead(rs.getString("head"));
+		this.setTitle(rs.getString("title"));
+		this.setWriter(rs.getString("writer"));
+		this.setContent(rs.getString("content"));
+		this.setWhen(rs.getString("when"));
+		this.setRead(rs.getInt("read"));
+		// 변경된 항목 추가
+		this.setParent(rs.getInt("parent"));
+		this.setDepth(rs.getInt("depth"));
+		this.setTeam(rs.getInt("team"));
+	}
+	
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
 	private int read;
 	
 	public BoardDto() {

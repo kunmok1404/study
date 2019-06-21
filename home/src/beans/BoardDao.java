@@ -3,6 +3,7 @@ package beans;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,16 +46,52 @@ public class BoardDao {
 	}
 	
 	// 글 등록 
-	public void write(BoardDto dto) throws Exception {
+	public int write(BoardDto dto) throws Exception {
+		
+		// 1. 현재 들어갈 게시글의 번호를 먼저 구한다.
 		Connection conn = getConnection();
-		String sql = "insert into board values(board_seq.nextval,?,?,?,?,sysdate,0)";
+		String sql = "select board_seq.nextval from dual";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setString(1, dto.getHead());
-		ps.setString(2, dto.getTitle());
-		ps.setString(3, dto.getWriter());
-		ps.setString(4, dto.getContent());
+		ResultSet rs = ps.executeQuery();
+		rs.next();// 다음 데이터로 이동(무조건 1개)
+		int no = rs.getInt("nextval");
+		ps.close();
+		
+		// 2. 답글일 경우는 부모글의 team 번호를 미리 구한다.
+		int team;
+		if(dto.getParent() == 0) {
+			team = no;
+		} else {
+			sql = "select team from board where no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getParent());
+			rs = ps.executeQuery();
+			rs.next();
+			team = rs.getInt("team");
+			ps.close();	
+		}
+		
+		// 3. 1번에서 구한 번호를 이용하여 게시글을 추가한다.
+		// nvl(항목,값) : 항목이 null 일때 값으로 치환
+		// nvl(depth+1, 0) : depth+1이 null 이면 0으로 바꾸세요.
+		sql ="insert into board values(?,?,?,?,?,sysdate,0,?,(select nvl(depth,0)+1 from board where no=?),?)";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, no);
+		ps.setString(2, dto.getHead());
+		ps.setString(3, dto.getTitle());
+		ps.setString(4, dto.getWriter());
+		ps.setString(5, dto.getContent());
+		if(dto.getParent()==0) {
+			ps.setNull(6, Types.INTEGER);;
+		} else {
+			ps.setInt(6, dto.getParent());
+		}
+		ps.setInt(7, dto.getParent());
+		ps.setInt(8, team);
 		ps.execute();
+		
 		conn.close();
+		return no;
 	}
 	
 	// 시퀀스 메소드
@@ -91,13 +128,7 @@ public class BoardDao {
 		BoardDto dto = null;
 		if(rs.next()) {
 			dto = new BoardDto();
-			dto.setNo(rs.getInt("no"));
-			dto.setHead(rs.getString("head"));
-			dto.setTitle(rs.getString("title"));
-			dto.setContent(rs.getString("content"));
-			dto.setWriter(rs.getString("writer"));
-			dto.setWhen(rs.getString("when"));
-			dto.setRead(rs.getInt("read"));
+			dto.setData(rs);
 		} else {
 			dto = null;
 		}
@@ -109,7 +140,10 @@ public class BoardDao {
 	public List<BoardDto> list(int start, int end) throws Exception {
 		Connection conn = getConnection();
 		String sql = "select * from (select rownum r, A.* from("
-				+   "select * from board order by when desc" 
+				+   "select * from board "
+				+ "connect by prior no=parent "
+				+ "start with parent is null "
+				+ "order siblings by team desc, no asc" 
 				+   ")A"
 				+   " ) where r between ? and ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -121,13 +155,7 @@ public class BoardDao {
 		
 		while(rs.next()) {
 			BoardDto dto = new BoardDto();
-			dto.setNo(rs.getInt("no"));
-			dto.setHead(rs.getString("head"));
-			dto.setTitle(rs.getString("title"));
-			dto.setContent(rs.getString("content"));
-			dto.setWhen(rs.getString("when"));
-			dto.setWriter(rs.getString("writer"));
-			dto.setRead(rs.getInt("read"));
+			dto.setData(rs);
 			list.add(dto);
 		}
 		conn.close();
@@ -176,13 +204,7 @@ public class BoardDao {
 		
 		while(rs.next()) {
 			BoardDto dto = new BoardDto();
-			dto.setNo(rs.getInt("no"));
-			dto.setHead(rs.getString("head"));
-			dto.setTitle(rs.getString("title"));
-			dto.setContent(rs.getString("content"));
-			dto.setWhen(rs.getString("when"));
-			dto.setWriter(rs.getString("writer"));
-			dto.setRead(rs.getInt("read"));
+			dto.setData(rs);
 			search_list.add(dto);
 		}
 		conn.close();

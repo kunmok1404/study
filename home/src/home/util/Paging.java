@@ -108,7 +108,7 @@ public class Paging {
 		this.start = end-(psize-1);
 		
 		// 하단 네비게이션 부분을 계산(총 게시글 수를 이용한 페이지 수 계산)
-		// 공식 : 페이지수 = (게시글수 + 페이지크기 -1) / 페이지크기
+		// 공식 : 페이지수 = (전체게시글수+ （페이지크기 -1）) / 페이지크기
 		BoardDao dao = new BoardDao();
 		this.count = dao.getCount(type, keyword);
 		this.pageCount = (count + psize - 1) / psize;

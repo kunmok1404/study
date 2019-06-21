@@ -19,7 +19,7 @@
 				<%-- 로그인 여부에 따라 메뉴를 구분하여 출력 --%>
 				<% if(login) { %>
 					<a href="<%=request.getContextPath() %>/index.jsp">메인화면</a>
-					<a href="<%=request.getContextPath()%>/member/info.jsp">내정보</a>
+					<a href="<%=request.getContextPath()%>/member/info.do">내정보</a>
 					<a href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a>
 					<a href="<%=request.getContextPath()%>/board/list.jsp">게시판</a>
 					

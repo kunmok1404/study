@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebFilter(urlPatterns= {
 		"/member/logout.jsp",
-		"/member/info.jsp",
+		"/member/info.do",
 		"/member/check.jsp",
 		"/member/check.do",
 		"/member/change_info.jsp",

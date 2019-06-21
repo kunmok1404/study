@@ -28,11 +28,16 @@ public class WriteServlet extends HttpServlet {
 			dto.setHead(req.getParameter("head"));
 			dto.setTitle(req.getParameter("title"));
 			dto.setContent(req.getParameter("content"));
+			
+			// parent가 있다면 dto에 추가(답글일 경우)
+			if(req.getParameterMap().containsKey("parent")) {
+				dto.setParent(Integer.parseInt(req.getParameter("parent")));
+			}
 			dto.setWriter(email);
-			dao.write(dto);
+			int no = dao.write(dto);
 			
 			
-			resp.sendRedirect("list.jsp");
+			resp.sendRedirect("content.jsp?no="+ no);
 		} catch (Exception e) {
 			resp.sendError(500);
 			e.printStackTrace();
