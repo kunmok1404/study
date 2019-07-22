@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	DispatcherServlet이 읽어서 실행하는 파일
+	 - View와 연관된 처리를 수행하는 도구들을 등록
+	 - 주로 컨트롤러를 이곳에 등록
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+			xmlns:mvc="http://www.springframework.org/schema/mvc"
+			xmlns:context="http://www.springframework.org/schema/context"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+			">
+	
+	<!-- 
+		정적자원(static resource) 설정 
+		-dispatcher servlet에서 처리하지 않도록 특정 경로를 제외
+		-이미지, 스타일, 스크립트 등에 사용
+		-mvc 모듈 사용
+		-mvc:annotation-driven은 활성화 태그(1회만 사용)
+		-mvc:resource에서 location이 실제 위치, mapping이 주소 요청
+		-*는 전체(직계자식까폴더까지)
+		-**는 하위폴더를 포함한 전체
+	-->
+	<mvc:annotation-driven/>
+	<mvc:resources location="/res/" mapping="/res/**"></mvc:resources>
+			
+	<bean name="/" class="spring.controller.MainController"></bean>
+	
+	<bean name="/regist" class="spring.controller.RegistController">
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+	
+	<bean name="/list" class="spring.controller.ListController">
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+	
+	<bean name="/detail" class="spring.controller.DetailController">
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+			
+</beans>
+
+
+
+
